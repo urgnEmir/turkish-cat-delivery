@@ -15,16 +15,18 @@ from Turkey, so I coded one. Much less illegal, slightly more nerdy.
 
 ## Stack
 - **Backend:** Node.js + Express
-- **Database:** SQLite via Node's built-in `node:sqlite` — file at `data/cats.db`
-  (no native module to compile). Requires **Node ≥ 22.5** (stable in Node 24+).
-- **Photos:** stored as files in `uploads/`
+- **Database:** MongoDB via Mongoose (`MONGODB_URI`). Cats, words, and the
+  checklist all live in MongoDB.
+- **Photos:** stored as binary in MongoDB and served from `/api/cats/:id/photo`,
+  so nothing is lost across restarts (no persistent disk needed).
 
 ## Run it
 ```bash
 npm install
 npm start
 ```
-Then open http://localhost:3000
+`MONGODB_URI` is read from a `.env` file in the project root. Then open
+http://localhost:3000
 
 ## Change the arrival date
 Edit one line in `public/app.js`:
@@ -42,18 +44,13 @@ A `render.yaml` blueprint is included.
 4. Open the URL Render gives you (e.g. `https://turkish-cat-delivery.onrender.com`).
 
 ### 💾 Persistence
-The blueprint uses the **Starter** plan (~$7/mo) with a 1 GB persistent disk
-mounted at `/var/data`. `STORAGE_DIR` points there, so `cats.db` and every
-uploaded photo survive redeploys, restarts, and sleeps — nothing she adds is
-ever lost.
-
-Want it free instead? Set `plan: free` and remove the `disk:` block and the
-`STORAGE_DIR` env var. Data then resets on restarts and the service sleeps
-after ~15 min idle.
+All data and photos live in MongoDB (Atlas), so the **free** plan is enough —
+nothing is lost across redeploys, restarts, or sleeps. Set `MONGODB_URI` in the
+Render dashboard (Environment tab) to the same value as your local `.env`.
 
 ### Env vars
 - `PORT` — set automatically by the host.
-- `STORAGE_DIR` — base folder for `data/` + `uploads/` (default: project dir).
+- `MONGODB_URI` — MongoDB connection string (required).
 
 ---
 Made with code, cats, and questionable emotional stability.

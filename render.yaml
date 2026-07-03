@@ -1,22 +1,19 @@
 # Render blueprint — deploy with one click from the Render dashboard.
 # Docs: https://render.com/docs/blueprint-spec
+#
+# Data now lives in MongoDB (Atlas), so no persistent disk is needed — the
+# free plan is enough and nothing is lost across restarts or sleeps.
 services:
   - type: web
     name: turkish-cat-delivery
     runtime: node
-    plan: starter            # paid plan (~$7/mo) — required for a persistent disk
+    plan: free
     buildCommand: npm install
     startCommand: npm start
     autoDeploy: true
     envVars:
       - key: NODE_VERSION
-        value: "24"           # node:sqlite is stable (no flag) on Node >= 24
-      - key: STORAGE_DIR
-        value: /var/data      # DB + photos live on the persistent disk below
-
-    # 💾 Persistent disk: keeps cats.db AND uploaded photos across every
-    # redeploy, restart, and sleep. One disk covers both (STORAGE_DIR points here).
-    disk:
-      name: cat-data
-      mountPath: /var/data
-      sizeGB: 1
+        value: "24"
+      # Set this in the Render dashboard (Environment tab) — same value as .env.
+      - key: MONGODB_URI
+        sync: false

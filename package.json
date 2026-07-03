@@ -8,10 +8,12 @@
     "dev": "node --watch server.js"
   },
   "engines": {
-    "node": ">=22.5"
+    "node": ">=18"
   },
   "dependencies": {
+    "dotenv": "^17.4.2",
     "express": "^4.21.2",
+    "mongoose": "^9.7.3",
     "multer": "^2.2.0"
   }
 }
