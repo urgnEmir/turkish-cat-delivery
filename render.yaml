@@ -1,0 +1,27 @@
+# Render blueprint — deploy with one click from the Render dashboard.
+# Docs: https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    name: turkish-cat-delivery
+    runtime: node
+    plan: free                # free tier: filesystem is EPHEMERAL (photos + DB reset on redeploy/restart)
+    buildCommand: npm install
+    startCommand: npm start
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: "24"           # node:sqlite is stable (no flag) on Node >= 24
+
+    # ---------------------------------------------------------------------
+    # 💾 To make cats, photos, and the kiss counter PERSIST forever,
+    # upgrade this service to a paid plan and uncomment the disk below.
+    # (Disks are not available on the free plan.)
+    # ---------------------------------------------------------------------
+    # plan: starter
+    # envVars (add alongside NODE_VERSION):
+    #   - key: STORAGE_DIR
+    #     value: /var/data
+    # disk:
+    #   name: cat-data
+    #   mountPath: /var/data     # holds both cats.db AND uploaded photos
+    #   sizeGB: 1

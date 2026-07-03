@@ -18,8 +18,11 @@ const { DatabaseSync } = require('node:sqlite');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const DATA_DIR = path.join(__dirname, 'data');
-const UPLOADS_DIR = path.join(__dirname, 'uploads');
+// STORAGE_DIR lets a host mount a single persistent disk that holds both the
+// database and the photos. Defaults to the project dir for local dev.
+const STORAGE_DIR = process.env.STORAGE_DIR || __dirname;
+const DATA_DIR = path.join(STORAGE_DIR, 'data');
+const UPLOADS_DIR = path.join(STORAGE_DIR, 'uploads');
 fs.mkdirSync(DATA_DIR, { recursive: true });
 fs.mkdirSync(UPLOADS_DIR, { recursive: true });
 

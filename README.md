@@ -32,12 +32,27 @@ Edit one line in `public/app.js`:
 const ARRIVAL_DATE = new Date('2027-01-03T12:00:00');
 ```
 
-## Deploy (Render / Railway)
-- Build command: `npm install`
-- Start command: `npm start`
-- The app reads `PORT` from the environment.
-- For photos + database to persist, attach a **persistent disk** and keep
-  `data/` and `uploads/` on it (they're created automatically).
+## Deploy to Render
+A `render.yaml` blueprint is included.
+
+1. Push this repo to GitHub (done).
+2. Go to https://dashboard.render.com → **New +** → **Blueprint**.
+3. Connect the `turkish-cat-delivery` repo. Render reads `render.yaml` and
+   creates the service. Click **Apply**.
+4. Open the URL Render gives you (e.g. `https://turkish-cat-delivery.onrender.com`).
+
+### ⚠️ Persistence
+On the **free** plan the filesystem is ephemeral: uploaded photos and the
+SQLite database reset on every redeploy/restart, and the service sleeps after
+~15 min idle (first visit after that is slow).
+
+To keep data **forever**, edit `render.yaml`: switch to `plan: starter`, then
+uncomment the `STORAGE_DIR` env var and the `disk:` block. That single disk
+(mounted at `/var/data`) holds both `cats.db` and the photos.
+
+### Env vars
+- `PORT` — set automatically by the host.
+- `STORAGE_DIR` — base folder for `data/` + `uploads/` (default: project dir).
 
 ---
 Made with code, cats, and questionable emotional stability.
