@@ -1,0 +1,17 @@
+{
+  "name": "turkish-cat-delivery",
+  "version": "1.0.0",
+  "description": "A virtual Turkish cat, delivered via code. A very serious international operation.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "engines": {
+    "node": ">=22.5"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "multer": "^2.2.0"
+  }
+}

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Turkish Cat Delivery 🐾</title>
+  <meta name="description" content="A virtual Turkish cat, delivered via code. A very serious international operation." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐱</text></svg>" />
+</head>
+<body>
+  <!-- floating paw prints -->
+  <div class="paws" aria-hidden="true"></div>
+
+  <main class="wrap">
+
+    <!-- 1. Landing -->
+    <header class="landing card">
+      <div class="pixel-cat" aria-hidden="true">
+        <span>🐱</span>
+      </div>
+      <h1>Turkish Cat Delivery</h1>
+      <p class="subtitle">A very serious international operation.</p>
+      <p class="intro">
+        I couldn’t bring a real cat from Turkey, so I coded one for you.
+        Much less illegal, slightly more nerdy.
+      </p>
+
+      <!-- total kisses badge -->
+      <div class="kiss-badge" title="One kiss for every word we learn together">
+        <span class="kiss-emoji">💋</span>
+        <span><b id="kissCount">–</b> kisses collected</span>
+      </div>
+    </header>
+
+    <!-- 9. Delivery status -->
+    <section class="card status-card">
+      <h2>📦 Delivery status</h2>
+      <div class="status-track" id="statusTrack">
+        <div class="status-fill" id="statusFill"></div>
+      </div>
+      <ul class="status-steps" id="statusSteps">
+        <li data-step="0">Preparing cat…</li>
+        <li data-step="1">Packing Turkish snacks…</li>
+        <li data-step="2">Flying to Poland…</li>
+        <li data-step="3">Waiting for Erasmus…</li>
+      </ul>
+    </section>
+
+    <!-- 2. Countdown -->
+    <section class="card countdown-card">
+      <h2>⏳ Countdown</h2>
+      <div class="countdown" id="countdown">
+        <div class="unit"><b id="cdDays">–</b><span>days</span></div>
+        <div class="unit"><b id="cdHours">–</b><span>hours</span></div>
+        <div class="unit"><b id="cdMinutes">–</b><span>minutes</span></div>
+        <div class="unit"><b id="cdSeconds">–</b><span>seconds</span></div>
+      </div>
+      <p class="countdown-text" id="countdownText">until Emir comes to Poland 🐾</p>
+    </section>
+
+    <!-- 3. Cat passports -->
+    <section class="card">
+      <div class="section-head">
+        <h2>🛂 Cat Passports</h2>
+        <button class="btn btn-soft" id="addCatBtn">+ Add a cat</button>
+      </div>
+      <p class="hint">Snap a photo of a cat you meet (or upload one) and give it a passport.</p>
+      <div class="passport-grid" id="passportGrid"></div>
+    </section>
+
+    <!-- 4 & 5. Cat mood + secret message -->
+    <section class="card cat-talk-card">
+      <h2>🐈 Talk to the cat</h2>
+      <div class="cat-bubble" id="catBubble">Tap a button and the cat will (reluctantly) respond.</div>
+      <div class="btn-row">
+        <button class="btn" id="askCatBtn">Ask the cat</button>
+        <button class="btn btn-secret" id="secretBtn">Secret message 💌</button>
+      </div>
+    </section>
+
+    <!-- 6. Bucket list -->
+    <section class="card">
+      <h2>✅ Things we should do together</h2>
+      <p class="hint">Our Poland bucket list. Checks are saved and synced.</p>
+      <ul class="checklist" id="checklist"></ul>
+      <div class="progress-note" id="listProgress"></div>
+    </section>
+
+    <!-- 7. Language -->
+    <section class="card">
+      <div class="section-head">
+        <h2>🗣️ Tiny Turkish Survival Kit</h2>
+        <button class="btn btn-soft" id="addWordBtn">+ Add a word</button>
+      </div>
+      <p class="hint">Every word you learn is worth one kiss. 💋</p>
+      <div class="word-grid" id="wordGrid"></div>
+    </section>
+
+    <footer class="footer">
+      Made with code, cats, and questionable emotional stability.
+    </footer>
+  </main>
+
+  <!-- Add-cat modal -->
+  <div class="modal" id="catModal" aria-hidden="true">
+    <div class="modal-box">
+      <button class="modal-close" data-close aria-label="Close">×</button>
+      <h3>New cat passport 🐱</h3>
+      <form id="catForm">
+        <label>Photo (camera or gallery)
+          <input type="file" name="photo" accept="image/*" capture="environment" id="catPhotoInput" />
+        </label>
+        <img id="catPhotoPreview" class="photo-preview" alt="" hidden />
+        <label>Name <input type="text" name="name" placeholder="Ankara Cat" required maxlength="60" /></label>
+        <div class="two-col">
+          <label>From <input type="text" name="origin" value="Türkiye" maxlength="40" /></label>
+          <label>To <input type="text" name="destination" value="Poland" maxlength="40" /></label>
+        </div>
+        <label>Mission <input type="text" name="mission" placeholder="Make her smile until Emir arrives" maxlength="120" /></label>
+        <label>Personality <input type="text" name="personality" placeholder="sleepy, dramatic, affectionate" maxlength="120" /></label>
+        <label>Favorite food <input type="text" name="favorite_food" value="attention" maxlength="60" /></label>
+        <div class="form-error" id="catFormError"></div>
+        <button type="submit" class="btn" id="catSubmit">Issue passport</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Add-word modal -->
+  <div class="modal" id="wordModal" aria-hidden="true">
+    <div class="modal-box">
+      <button class="modal-close" data-close aria-label="Close">×</button>
+      <h3>Teach a new word 💋</h3>
+      <p class="hint">This adds one kiss to the total.</p>
+      <form id="wordForm">
+        <label>Turkish word <input type="text" name="turkish" placeholder="Tatlım" required maxlength="40" /></label>
+        <label>Meaning <input type="text" name="meaning" placeholder="Sweetheart" required maxlength="80" /></label>
+        <div class="form-error" id="wordFormError"></div>
+        <button type="submit" class="btn">Add word (+1 kiss)</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
