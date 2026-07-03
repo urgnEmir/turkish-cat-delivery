@@ -210,9 +210,12 @@ h1, h2, h3 { font-family: "Baloo 2", "Nunito", sans-serif; margin: 0 0 .2em; }
   font-size: .6rem; letter-spacing: .12em; padding: 3px 40px; font-weight: 700; opacity: .85;
 }
 .passport-photo {
-  width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: 12px;
+  width: 100%; aspect-ratio: 4/3; object-fit: cover; object-position: center; border-radius: 12px;
   border: 3px solid #fff; box-shadow: var(--shadow-sm); background: #fbe8ef; margin-bottom: 10px;
+  display: block;
 }
+img.passport-photo { cursor: zoom-in; transition: transform .2s ease, filter .2s ease; }
+img.passport-photo:hover { transform: scale(1.02); filter: brightness(1.03); }
 .passport-photo.placeholder {
   display: flex; align-items: center; justify-content: center; font-size: 2.6rem; color: var(--pink);
 }
@@ -357,6 +360,29 @@ form .btn { width: 100%; margin-top: 18px; }
 .landing h1::before { content: "✨"; top: -6px; left: -28px; }
 .landing h1::after { content: "✨"; bottom: -2px; right: -28px; animation-delay: 1.2s; }
 @keyframes twinkle { 0%,100% { opacity: .25; transform: scale(.8) rotate(-10deg); } 50% { opacity: 1; transform: scale(1.15) rotate(10deg); } }
+
+/* ---------- photo lightbox ---------- */
+.lightbox {
+  position: fixed; inset: 0; z-index: 100; padding: 24px;
+  background: rgba(91,74,82,.86); backdrop-filter: blur(5px);
+  display: none; align-items: center; justify-content: center;
+}
+.lightbox.open { display: flex; animation: fade .2s ease; }
+.lightbox-fig { margin: 0; text-align: center; animation: pop .3s ease; max-width: 100%; }
+.lightbox-fig img {
+  max-width: 100%; max-height: 82vh; border-radius: 18px;
+  border: 5px solid #fff; box-shadow: var(--shadow); object-fit: contain; background: #fff;
+}
+.lightbox-fig figcaption {
+  color: #fff; font-family: "Baloo 2", sans-serif; font-size: 1.15rem;
+  margin-top: 14px; text-shadow: 0 2px 8px rgba(0,0,0,.3);
+}
+.lightbox-close {
+  position: absolute; top: 16px; right: 22px; background: rgba(255,255,255,.15);
+  border: none; color: #fff; font-size: 2rem; line-height: 1; cursor: pointer;
+  width: 46px; height: 46px; border-radius: 50%; transition: background .2s ease, transform .15s ease;
+}
+.lightbox-close:hover { background: rgba(255,255,255,.3); transform: scale(1.1); }
 
 /* ---------- floating paws ---------- */
 .paws { position: fixed; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }

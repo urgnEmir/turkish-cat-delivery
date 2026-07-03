@@ -119,6 +119,9 @@ function renderPassport(cat) {
     </dl>
     <button class="del" data-id="${cat.id}">remove</button>
   `;
+  const img = el.querySelector('img.passport-photo');
+  if (img) img.addEventListener('click', () => openLightbox(cat.photoUrl, cat.name));
+
   el.querySelector('.del').addEventListener('click', async () => {
     if (!confirm(`Remove ${cat.name} from the operation?`)) return;
     await api(`/api/cats/${cat.id}`, { method: 'DELETE' });
@@ -126,6 +129,28 @@ function renderPassport(cat) {
   });
   return el;
 }
+
+/* Photo lightbox — tap a passport photo to see it full-size */
+function openLightbox(url, caption) {
+  $('#lightboxImg').src = url;
+  $('#lightboxImg').alt = caption || '';
+  $('#lightboxCaption').textContent = caption || '';
+  const box = $('#lightbox');
+  box.classList.add('open');
+  box.setAttribute('aria-hidden', 'false');
+}
+function closeLightbox() {
+  const box = $('#lightbox');
+  box.classList.remove('open');
+  box.setAttribute('aria-hidden', 'true');
+  $('#lightboxImg').src = '';
+}
+$('#lightbox').addEventListener('click', (e) => {
+  if (e.target.id === 'lightbox' || e.target.hasAttribute('data-close')) closeLightbox();
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && $('#lightbox').classList.contains('open')) closeLightbox();
+});
 
 /* =========================================================================
  * Words + kisses
