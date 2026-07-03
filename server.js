@@ -218,12 +218,28 @@ app.get('/api/checklist', (req, res) => {
   res.json(items.map((i) => ({ ...i, checked: !!i.checked })));
 });
 
+app.post('/api/checklist', (req, res) => {
+  const label = (req.body.label || '').trim();
+  if (!label) return res.status(400).json({ error: 'Write something to add first.' });
+  const max = db.prepare('SELECT COALESCE(MAX(sort_order), -1) AS m FROM checklist').get().m;
+  const info = db.prepare('INSERT INTO checklist (label, sort_order) VALUES (?, ?)').run(label, max + 1);
+  const item = db.prepare('SELECT id, label, checked, sort_order FROM checklist WHERE id = ?').get(info.lastInsertRowid);
+  res.status(201).json({ ...item, checked: !!item.checked });
+});
+
 app.patch('/api/checklist/:id', (req, res) => {
   const item = db.prepare('SELECT * FROM checklist WHERE id = ?').get(req.params.id);
   if (!item) return res.status(404).json({ error: 'Item not found.' });
   const checked = req.body.checked ? 1 : 0;
   db.prepare('UPDATE checklist SET checked = ? WHERE id = ?').run(checked, req.params.id);
   res.json({ ok: true, id: item.id, checked: !!checked });
+});
+
+app.delete('/api/checklist/:id', (req, res) => {
+  const item = db.prepare('SELECT * FROM checklist WHERE id = ?').get(req.params.id);
+  if (!item) return res.status(404).json({ error: 'Item not found.' });
+  db.prepare('DELETE FROM checklist WHERE id = ?').run(req.params.id);
+  res.json({ ok: true });
 });
 
 // ---------------------------------------------------------------------------

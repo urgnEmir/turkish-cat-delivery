@@ -167,6 +167,7 @@ async function loadChecklist() {
     li.innerHTML = `
       <input type="checkbox" id="chk-${item.id}" ${item.checked ? 'checked' : ''} />
       <label for="chk-${item.id}">${escapeHtml(item.label)}</label>
+      <button class="del" title="Remove" aria-label="Remove">×</button>
     `;
     const box = li.querySelector('input');
     box.addEventListener('change', async () => {
@@ -183,10 +184,39 @@ async function loadChecklist() {
         alert(e.message);
       }
     });
+    li.querySelector('.del').addEventListener('click', async () => {
+      if (!confirm(`Remove “${item.label}” from the list?`)) return;
+      try {
+        await api(`/api/checklist/${item.id}`, { method: 'DELETE' });
+        li.remove();
+        updateListProgress();
+      } catch (e) {
+        alert(e.message);
+      }
+    });
     ul.appendChild(li);
   });
   updateListProgress();
 }
+
+// add a new checklist item
+$('#listForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const input = $('#listInput');
+  const label = input.value.trim();
+  if (!label) return;
+  try {
+    await api('/api/checklist', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ label }),
+    });
+    input.value = '';
+    await loadChecklist();
+  } catch (ex) {
+    alert(ex.message);
+  }
+});
 
 function updateListProgress() {
   const boxes = document.querySelectorAll('#checklist input');

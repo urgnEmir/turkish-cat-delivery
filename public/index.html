@@ -85,8 +85,12 @@
     <!-- 6. Bucket list -->
     <section class="card">
       <h2>✅ Things we should do together</h2>
-      <p class="hint">Our Poland bucket list. Checks are saved and synced.</p>
+      <p class="hint">Our Poland bucket list. Add, remove, and check things off — all saved and synced.</p>
       <ul class="checklist" id="checklist"></ul>
+      <form class="add-item" id="listForm">
+        <input type="text" id="listInput" placeholder="Add something we should do together…" maxlength="120" autocomplete="off" />
+        <button type="submit" class="btn btn-soft">+ Add</button>
+      </form>
       <div class="progress-note" id="listProgress"></div>
     </section>
 
