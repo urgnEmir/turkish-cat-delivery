@@ -79,6 +79,7 @@ function updateDeliveryStatus() {
   const elapsed = now - DELIVERY_START;
   const pct = Math.min(100, Math.max(0, (elapsed / total) * 100));
   $('#statusFill').style.width = pct + '%';
+  $('#statusCat').style.left = pct + '%';
 
   // 4 steps → active step based on progress
   const activeStep = Math.min(3, Math.floor(pct / 25));
@@ -179,6 +180,10 @@ async function loadChecklist() {
         });
         li.classList.toggle('checked', box.checked);
         updateListProgress();
+        if (box.checked) {
+          const r = box.getBoundingClientRect();
+          burstHearts(r.left + r.width / 2, r.top);
+        }
       } catch (e) {
         box.checked = !box.checked; // revert on failure
         alert(e.message);
@@ -312,10 +317,45 @@ $('#wordForm').addEventListener('submit', async (e) => {
     e.target.reset();
     closeModal($('#wordModal'));
     await loadWords();
+    floatKiss();
   } catch (ex) {
     err.textContent = ex.message;
   }
 });
+
+/* =========================================================================
+ * Cute particle effects
+ * ========================================================================= */
+function burstHearts(x, y, count = 6) {
+  const emojis = ['💛', '💗', '✨', '🐾'];
+  for (let i = 0; i < count; i++) {
+    const p = document.createElement('span');
+    p.className = 'particle';
+    p.textContent = emojis[i % emojis.length];
+    p.style.left = x + 'px';
+    p.style.top = y + 'px';
+    p.style.setProperty('--dx', (Math.random() * 80 - 40) + 'px');
+    p.style.setProperty('--rot', (Math.random() * 60 - 30) + 'deg');
+    p.style.animationDelay = (Math.random() * 0.15) + 's';
+    document.body.appendChild(p);
+    setTimeout(() => p.remove(), 1400);
+  }
+}
+
+function floatKiss() {
+  const badge = $('.kiss-badge');
+  const rect = badge.getBoundingClientRect();
+  const k = document.createElement('span');
+  k.className = 'kiss-float';
+  k.textContent = '+1 💋';
+  k.style.left = rect.left + rect.width / 2 - 20 + 'px';
+  k.style.top = rect.top + 'px';
+  document.body.appendChild(k);
+  setTimeout(() => k.remove(), 1400);
+}
+
+// a little burst when tapping the kiss badge, just because
+$('.kiss-badge').addEventListener('click', (e) => burstHearts(e.clientX, e.clientY, 8));
 
 /* =========================================================================
  * Floating paw prints

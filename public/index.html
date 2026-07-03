@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=3" />
+  <link rel="stylesheet" href="styles.css?v=4" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐱</text></svg>" />
 </head>
 <body>
@@ -19,8 +19,19 @@
 
     <!-- 1. Landing -->
     <header class="landing card">
-      <div class="pixel-cat" aria-hidden="true">
-        <span>🐱</span>
+      <div class="css-cat" aria-hidden="true">
+        <div class="cat-ear left"></div>
+        <div class="cat-ear right"></div>
+        <div class="cat-face">
+          <div class="cat-eye left"></div>
+          <div class="cat-eye right"></div>
+          <div class="cat-blush left"></div>
+          <div class="cat-blush right"></div>
+          <div class="cat-nose"></div>
+          <div class="cat-mouth"></div>
+          <div class="cat-whiskers left"><i></i><i></i><i></i></div>
+          <div class="cat-whiskers right"><i></i><i></i><i></i></div>
+        </div>
       </div>
       <h1>Turkish Cat Delivery</h1>
       <p class="subtitle">A very serious international operation.</p>
@@ -41,6 +52,7 @@
       <h2>📦 Delivery status</h2>
       <div class="status-track" id="statusTrack">
         <div class="status-fill" id="statusFill"></div>
+        <span class="status-cat" id="statusCat" aria-hidden="true">🐈</span>
       </div>
       <ul class="status-steps" id="statusSteps">
         <li data-step="0">Preparing cat…</li>
@@ -148,6 +160,6 @@
     </div>
   </div>
 
-  <script src="app.js?v=3"></script>
+  <script src="app.js?v=4"></script>
 </body>
 </html>

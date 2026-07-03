@@ -50,7 +50,9 @@ h1, h2, h3 { font-family: "Baloo 2", "Nunito", sans-serif; margin: 0 0 .2em; }
   padding: 26px 24px;
   margin-bottom: 22px;
   border: 1px solid rgba(255, 155, 179, 0.18);
+  transition: transform .25s ease, box-shadow .25s ease;
 }
+.card:hover { transform: translateY(-3px); box-shadow: 0 18px 40px rgba(191, 120, 140, 0.24); }
 
 .card h2 { font-size: 1.35rem; color: var(--pink-deep); }
 
@@ -71,8 +73,60 @@ h1, h2, h3 { font-family: "Baloo 2", "Nunito", sans-serif; margin: 0 0 .2em; }
 .subtitle { font-size: 1.05rem; color: var(--ink-soft); font-style: italic; margin: 0 0 14px; }
 .intro { max-width: 460px; margin: 0 auto 18px; }
 
-.pixel-cat { font-size: 3.4rem; animation: bob 3s ease-in-out infinite; }
-@keyframes bob { 0%,100% { transform: translateY(0) rotate(-3deg);} 50% { transform: translateY(-10px) rotate(3deg);} }
+/* ---------- hand-crafted CSS cat ---------- */
+.css-cat { position: relative; width: 110px; height: 100px; margin: 0 auto 8px; animation: bob 3.5s ease-in-out infinite; }
+@keyframes bob { 0%,100% { transform: translateY(0) rotate(-2deg);} 50% { transform: translateY(-8px) rotate(2deg);} }
+
+.cat-ear {
+  position: absolute; top: 0; width: 0; height: 0;
+  border-left: 20px solid transparent; border-right: 20px solid transparent;
+  border-bottom: 32px solid #f6b89a; z-index: 0;
+}
+.cat-ear::after {
+  content: ""; position: absolute; top: 10px; left: -11px;
+  border-left: 11px solid transparent; border-right: 11px solid transparent;
+  border-bottom: 19px solid #ffd9e4;
+}
+.cat-ear.left { left: 8px; transform: rotate(-8deg); transform-origin: bottom; animation: earTwitch 6s ease-in-out infinite; }
+.cat-ear.right { right: 8px; transform: rotate(8deg); }
+@keyframes earTwitch { 0%, 92%, 100% { transform: rotate(-8deg); } 94%, 98% { transform: rotate(-18deg); } }
+
+.cat-face {
+  position: absolute; top: 16px; left: 50%; transform: translateX(-50%);
+  width: 104px; height: 84px; background: linear-gradient(160deg, #ffd9b8, #f6b89a);
+  border-radius: 50% 50% 46% 46%; z-index: 1; box-shadow: var(--shadow-sm);
+}
+.cat-eye {
+  position: absolute; top: 32px; width: 12px; height: 14px;
+  background: #5b4a52; border-radius: 50%;
+  animation: blink 5s ease-in-out infinite;
+}
+.cat-eye::after { content: ""; position: absolute; top: 2px; left: 2px; width: 4px; height: 4px; background: #fff; border-radius: 50%; }
+.cat-eye.left { left: 24px; } .cat-eye.right { right: 24px; }
+@keyframes blink { 0%, 93%, 100% { transform: scaleY(1); } 95%, 97% { transform: scaleY(.08); } }
+
+.cat-blush { position: absolute; top: 48px; width: 14px; height: 8px; background: #ffadc0; border-radius: 50%; opacity: .7; }
+.cat-blush.left { left: 12px; } .cat-blush.right { right: 12px; }
+
+.cat-nose {
+  position: absolute; top: 47px; left: 50%; transform: translateX(-50%);
+  width: 10px; height: 7px; background: #ff8fa8; border-radius: 45% 45% 55% 55%;
+}
+.cat-mouth {
+  position: absolute; top: 54px; left: 50%; transform: translateX(-50%);
+  width: 16px; height: 8px; border: 2px solid #b0776a; border-top: none;
+  border-radius: 0 0 14px 14px;
+}
+.cat-whiskers { position: absolute; top: 48px; width: 22px; }
+.cat-whiskers.left { left: -14px; } .cat-whiskers.right { right: -14px; }
+.cat-whiskers i {
+  display: block; height: 1.6px; background: rgba(176,119,106,.55);
+  border-radius: 2px; margin: 4px 0;
+}
+.cat-whiskers.left i { transform-origin: right; }
+.cat-whiskers.right i { transform-origin: left; }
+.cat-whiskers.left i:nth-child(1), .cat-whiskers.right i:nth-child(3) { transform: rotate(8deg); }
+.cat-whiskers.left i:nth-child(3), .cat-whiskers.right i:nth-child(1) { transform: rotate(-8deg); }
 
 .kiss-badge {
   display: inline-flex; align-items: center; gap: 8px;
@@ -103,8 +157,17 @@ h1, h2, h3 { font-family: "Baloo 2", "Nunito", sans-serif; margin: 0 0 .2em; }
 /* ---------- delivery status ---------- */
 .status-track {
   position: relative; height: 12px; border-radius: 999px;
-  background: #f2e2ea; overflow: hidden; margin: 10px 0 16px;
+  background: #f2e2ea; margin: 18px 0 16px;
 }
+.status-track .status-fill { position: absolute; inset: 0 auto 0 0; }
+.status-cat {
+  position: absolute; top: 50%; left: 0;
+  transform: translate(-50%, -68%) scaleX(-1);
+  font-size: 1.5rem; transition: left .8s ease;
+  filter: drop-shadow(0 2px 3px rgba(191,120,140,.3));
+  animation: catWalk 1s ease-in-out infinite;
+}
+@keyframes catWalk { 0%,100% { margin-top: 0; } 50% { margin-top: -3px; } }
 .status-fill {
   height: 100%; width: 0%; border-radius: 999px;
   background: linear-gradient(90deg, var(--peach), var(--pink), var(--lav));
@@ -166,11 +229,19 @@ h1, h2, h3 { font-family: "Baloo 2", "Nunito", sans-serif; margin: 0 0 .2em; }
 /* ---------- cat talk ---------- */
 .cat-talk-card { text-align: center; }
 .cat-bubble {
+  position: relative;
   background: linear-gradient(135deg, #fff, #f6efff);
   border: 1px solid rgba(201,182,255,.5); border-radius: 20px;
   padding: 18px; font-size: 1.08rem; min-height: 58px;
   display: flex; align-items: center; justify-content: center;
   transition: transform .2s ease, opacity .2s ease;
+  margin-bottom: 14px;
+}
+.cat-bubble::before {
+  content: ""; position: absolute; bottom: -8px; left: 50%;
+  transform: translateX(-50%) rotate(45deg); width: 16px; height: 16px;
+  background: #f8f2ff; border-right: 1px solid rgba(201,182,255,.5);
+  border-bottom: 1px solid rgba(201,182,255,.5);
 }
 .cat-bubble.pop { animation: bubblePop .35s ease; }
 @keyframes bubblePop { 0% { transform: scale(.95); opacity: .4; } 60% { transform: scale(1.04); } 100% { transform: scale(1); opacity: 1; } }
@@ -186,7 +257,8 @@ h1, h2, h3 { font-family: "Baloo 2", "Nunito", sans-serif; margin: 0 0 .2em; }
 .checklist li:hover { background: #fce9f1; }
 .checklist input { appearance: none; width: 24px; height: 24px; border: 2px solid var(--pink); border-radius: 8px; cursor: pointer; position: relative; flex: 0 0 auto; transition: background .2s; }
 .checklist input:checked { background: var(--pink-deep); border-color: var(--pink-deep); }
-.checklist input:checked::after { content: "✓"; color: #fff; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-weight: 700; }
+.checklist input:checked::after { content: "♥"; color: #fff; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .85rem; animation: heartIn .3s ease; }
+@keyframes heartIn { from { transform: scale(0); } 60% { transform: scale(1.4); } to { transform: scale(1); } }
 .checklist label { cursor: pointer; flex: 1; }
 .checklist li.checked label { text-decoration: line-through; color: var(--ink-soft); }
 .checklist .del {
@@ -255,6 +327,36 @@ form input:focus { outline: none; border-color: var(--pink-deep); box-shadow: 0 
 form .btn { width: 100%; margin-top: 18px; }
 .photo-preview { width: 100%; max-height: 220px; object-fit: cover; border-radius: 14px; margin-top: 10px; }
 .form-error { color: var(--pink-deep); font-size: .88rem; margin-top: 10px; min-height: 1em; font-weight: 700; }
+
+/* ---------- particles (hearts, kisses) ---------- */
+.particle {
+  position: fixed; z-index: 90; pointer-events: none; font-size: 1.1rem;
+  animation: particleUp 1.1s ease-out forwards;
+}
+@keyframes particleUp {
+  0% { transform: translate(0, 0) scale(.6); opacity: 1; }
+  100% { transform: translate(var(--dx, 0), -70px) scale(1.25) rotate(var(--rot, 0deg)); opacity: 0; }
+}
+.kiss-float {
+  position: fixed; z-index: 90; pointer-events: none;
+  font-family: "Baloo 2", sans-serif; font-weight: 700; color: var(--pink-deep);
+  animation: kissUp 1.3s ease-out forwards;
+}
+@keyframes kissUp {
+  0% { transform: translateY(0) scale(.8); opacity: 0; }
+  15% { opacity: 1; }
+  100% { transform: translateY(-64px) scale(1.15); opacity: 0; }
+}
+
+/* ---------- title sparkles ---------- */
+.landing h1 { position: relative; display: inline-block; }
+.landing h1::before, .landing h1::after {
+  position: absolute; font-size: 1.1rem; -webkit-text-fill-color: initial;
+  animation: twinkle 2.4s ease-in-out infinite;
+}
+.landing h1::before { content: "✨"; top: -6px; left: -28px; }
+.landing h1::after { content: "✨"; bottom: -2px; right: -28px; animation-delay: 1.2s; }
+@keyframes twinkle { 0%,100% { opacity: .25; transform: scale(.8) rotate(-10deg); } 50% { opacity: 1; transform: scale(1.15) rotate(10deg); } }
 
 /* ---------- floating paws ---------- */
 .paws { position: fixed; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
