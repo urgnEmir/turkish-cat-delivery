@@ -197,11 +197,12 @@ h1, h2, h3 { font-family: "Baloo 2", "Nunito", sans-serif; margin: 0 0 .2em; }
 .checklist li:hover .del, .checklist li:focus-within .del { opacity: 1; }
 .checklist .del:hover { color: var(--pink-deep); transform: scale(1.2); }
 
-.add-item { display: flex; gap: 10px; margin-top: 14px; }
+.add-item { display: flex; gap: 10px; margin-top: 14px; align-items: center; }
 .add-item input {
-  flex: 1; padding: 10px 14px; border-radius: 999px;
+  flex: 1 1 auto; min-width: 0; padding: 10px 14px; border-radius: 999px;
   border: 1.5px solid rgba(255,155,179,.4); font-family: inherit; font-size: 1rem; background: #fffdfc;
 }
+.add-item .btn { white-space: nowrap; padding: 11px 18px; }
 .add-item input:focus { outline: none; border-color: var(--pink-deep); box-shadow: 0 0 0 3px rgba(255,111,145,.15); }
 .add-item .btn { flex: 0 0 auto; }
 

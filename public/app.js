@@ -8,11 +8,11 @@
  * ⚙️  EASY TO CHANGE: the day Emir arrives in Poland.
  * Format: 'YYYY-MM-DDTHH:MM:SS' (24h, local time). Change this one line.
  * ------------------------------------------------------------------------- */
-const ARRIVAL_DATE = new Date('2027-01-03T12:00:00');
+const ARRIVAL_DATE = new Date('2027-03-01T12:00:00');
 
-/* The countdown "window" (for the delivery status bar): from now-ish start
- * to arrival. We anchor the start ~6 months before arrival. */
-const DELIVERY_START = new Date(ARRIVAL_DATE.getTime() - 183 * 24 * 60 * 60 * 1000);
+/* The countdown "window" (for the delivery status bar): the bar fills from
+ * this start date up to arrival. Set to when the gift was made. */
+const DELIVERY_START = new Date('2026-07-03T00:00:00');
 
 const CAT_MESSAGES = [
   'The cat says: she should smile today.',

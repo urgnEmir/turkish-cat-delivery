@@ -4,24 +4,19 @@ services:
   - type: web
     name: turkish-cat-delivery
     runtime: node
-    plan: free                # free tier: filesystem is EPHEMERAL (photos + DB reset on redeploy/restart)
+    plan: starter            # paid plan (~$7/mo) — required for a persistent disk
     buildCommand: npm install
     startCommand: npm start
     autoDeploy: true
     envVars:
       - key: NODE_VERSION
         value: "24"           # node:sqlite is stable (no flag) on Node >= 24
+      - key: STORAGE_DIR
+        value: /var/data      # DB + photos live on the persistent disk below
 
-    # ---------------------------------------------------------------------
-    # 💾 To make cats, photos, and the kiss counter PERSIST forever,
-    # upgrade this service to a paid plan and uncomment the disk below.
-    # (Disks are not available on the free plan.)
-    # ---------------------------------------------------------------------
-    # plan: starter
-    # envVars (add alongside NODE_VERSION):
-    #   - key: STORAGE_DIR
-    #     value: /var/data
-    # disk:
-    #   name: cat-data
-    #   mountPath: /var/data     # holds both cats.db AND uploaded photos
-    #   sizeGB: 1
+    # 💾 Persistent disk: keeps cats.db AND uploaded photos across every
+    # redeploy, restart, and sleep. One disk covers both (STORAGE_DIR points here).
+    disk:
+      name: cat-data
+      mountPath: /var/data
+      sizeGB: 1

@@ -41,14 +41,15 @@ A `render.yaml` blueprint is included.
    creates the service. Click **Apply**.
 4. Open the URL Render gives you (e.g. `https://turkish-cat-delivery.onrender.com`).
 
-### ⚠️ Persistence
-On the **free** plan the filesystem is ephemeral: uploaded photos and the
-SQLite database reset on every redeploy/restart, and the service sleeps after
-~15 min idle (first visit after that is slow).
+### 💾 Persistence
+The blueprint uses the **Starter** plan (~$7/mo) with a 1 GB persistent disk
+mounted at `/var/data`. `STORAGE_DIR` points there, so `cats.db` and every
+uploaded photo survive redeploys, restarts, and sleeps — nothing she adds is
+ever lost.
 
-To keep data **forever**, edit `render.yaml`: switch to `plan: starter`, then
-uncomment the `STORAGE_DIR` env var and the `disk:` block. That single disk
-(mounted at `/var/data`) holds both `cats.db` and the photos.
+Want it free instead? Set `plan: free` and remove the `disk:` block and the
+`STORAGE_DIR` env var. Data then resets on restarts and the service sleeps
+after ~15 min idle.
 
 ### Env vars
 - `PORT` — set automatically by the host.
